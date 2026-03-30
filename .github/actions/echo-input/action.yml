@@ -1,0 +1,15 @@
+name: Echo Input
+description: Simply echoes the prompt input
+inputs:
+  prompt:
+    description: The prompt text
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Echo prompt
+      shell: bash
+      run: |
+        echo "=== RECEIVED PROMPT ==="
+        echo "${{ inputs.prompt }}"
+        echo "=== END PROMPT ==="

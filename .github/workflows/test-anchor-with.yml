@@ -1,0 +1,31 @@
+name: Test YAML Anchor in With
+
+on:
+  workflow_dispatch:
+
+env:
+  SHARED_PROMPT: &shared-prompt |
+    This is a shared prompt.
+    Line two of the prompt.
+
+jobs:
+  job-a:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print via env alias
+        run: echo "$PROMPT"
+        env:
+          PROMPT: *shared-prompt
+
+      - name: Print via with alias
+        uses: actions/github-script@v7
+        with:
+          script: *shared-prompt
+
+  job-b:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print via with alias in job-b
+        uses: actions/github-script@v7
+        with:
+          script: *shared-prompt

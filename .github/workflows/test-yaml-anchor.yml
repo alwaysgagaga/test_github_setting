@@ -1,0 +1,26 @@
+name: Test YAML Anchor
+
+on:
+  workflow_dispatch:
+
+env:
+  SHARED_PROMPT: &shared-prompt |
+    This is a shared prompt.
+    It should be reused across jobs.
+
+jobs:
+  job-a:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo prompt A
+        run: echo "Job A"
+        env:
+          PROMPT: *shared-prompt
+
+  job-b:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo prompt B
+        run: echo "Job B"
+        env:
+          PROMPT: *shared-prompt

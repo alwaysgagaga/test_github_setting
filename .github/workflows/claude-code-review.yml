@@ -35,18 +35,15 @@ env:
 
     Only include this section if Overall is ✅ Approve or ⚠️ Approve with suggestions.
 
-    Evaluate the **scope of changes** (not code quality — that's covered above):
+    Check the **scope of changes** (not code quality — that's covered above) against these criteria:
+    - No 🔴 Critical issues above
+    - No production runtime impact (= no change to end-user observable behavior; docs, tests, config, CI, type annotations, formatting are fine)
+    - No security-sensitive changes (auth, permissions, secrets, user data)
+    - Adequate test coverage
 
-    | Criteria | Result |
-    |----------|--------|
-    | No 🔴 Critical issues above | PASS/FAIL |
-    | No production runtime impact | PASS/FAIL — [reason if FAIL] |
-    | No security-sensitive changes | PASS/FAIL — [reason if FAIL] |
-    | Adequate test coverage | PASS/FAIL — [reason if FAIL] |
-
-    "No production runtime impact" = changes don't alter end-user observable behavior (docs, tests, config, CI, type annotations, formatting → PASS).
-
-    **Self-approve recommendation: YES/NO** — YES only if ALL PASS.
+    Output a single line:
+    - If ALL pass: **Self-approve recommendation: YES** — summarize what passed (e.g. "純 refactor，no production runtime impact, no security-sensitive changes, adequate test coverage")
+    - If ANY fail: **Self-approve recommendation: NO** — state which failed and why (e.g. "API response 格式變更，影響 production runtime")
 
     Use `gh pr comment` with your Bash tool to leave your review as a comment on the PR.
 
